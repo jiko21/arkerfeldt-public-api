@@ -21,8 +21,21 @@ export class PostResolver {
 
   @Query((returns) => Post, { nullable: true })
   postById(@Args('id') id: number) {
-    return this.prismaService.post.findUnique({
-      where: { id },
+    return this.prismaService.post.findFirst({
+      where: {
+        id,
+        status: 'PUBLISHED',
+      },
+    });
+  }
+
+  @Query((returns) => [Post], { nullable: true })
+  feed() {
+    return this.prismaService.post.findMany({
+      where: {
+        status: 'PUBLISHED',
+        isDelete: false,
+      },
     });
   }
 }
