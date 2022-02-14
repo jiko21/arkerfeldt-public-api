@@ -26,4 +26,5 @@ scalar Timestamp
 
 type Query {
   postById(id: Float!): Post
+  feed: [Post!]
 }
